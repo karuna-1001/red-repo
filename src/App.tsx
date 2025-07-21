@@ -9,8 +9,10 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = useState<Tab>("trending");
+  const [activeTab, setActiveTab] = useState<Tab>("liked");
   const [trendingRepos, setTrendingRepos] = useState<Repo[]>([]);
+  const [likedRepos, setLikedRepos] = useState<Repo[]>([]);
+  const [currentRepos, setCurrentRepos] = useState<Repo[]>([]);
   const [languageValue, setLanguageValue] = useState<string>("");
 
   const getTrendingRepos = async () => {
@@ -39,6 +41,9 @@ const App = () => {
     getTrendingRepos();
   };
   useEffect(() => {
+    setCurrentRepos(activeTab === "liked" ? likedRepos : trendingRepos);
+  }, [activeTab, likedRepos, trendingRepos]);
+  useEffect(() => {
     getTrendingRepos();
   }, []);
   return (
@@ -59,7 +64,7 @@ const App = () => {
         filterTrendingRepos={filterTrendingRepos}
       />
       <RepoList
-          trendingRepos={trendingRepos}
+          trendingRepos={currentRepos}
            activeTab={activeTab}
         />
     </div>
