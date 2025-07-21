@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Repo } from "./types";
+import TheHeader from "./components/TheHeader";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,8 +43,8 @@ const App = () => {
           ⚠ Somthing went wrong. Please try again later.
         </div>
       )}
+      <TheHeader/>
       <div>
-        <h2 className="text-2xl">Repo List</h2>
         {trendingRepos.map((repo)=>(<p key={repo.id} > {repo.name} - {repo.stars} - {repo.language}</p>))}
       </div>
     </div>
