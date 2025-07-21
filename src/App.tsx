@@ -60,6 +60,7 @@ const App = () => {
       />
       <RepoList
           trendingRepos={trendingRepos}
+           activeTab={activeTab}
         />
     </div>
   );
