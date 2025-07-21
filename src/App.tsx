@@ -33,6 +33,10 @@ const App = () => {
       setIsLoading(false);
     }
   };
+  const filterTrendingRepos = () => {
+    setActiveTab("trending");
+    getTrendingRepos();
+  };
   useEffect(() => {
     getTrendingRepos();
   }, []);
@@ -51,6 +55,7 @@ const App = () => {
         setActiveTab={setActiveTab}
         languageValue={languageValue}
         setLanguageValue={setLanguageValue}
+        filterTrendingRepos={filterTrendingRepos}
       />
       <div>
         {trendingRepos.map((repo) => (

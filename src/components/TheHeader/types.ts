@@ -5,4 +5,5 @@ export default interface TheHeaderProps {
   setActiveTab: (tab: Tab) => void;
   languageValue: string;
   setLanguageValue: (value: string) => void;
+  filterTrendingRepos: () => void;
 }
