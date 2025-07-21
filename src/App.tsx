@@ -25,7 +25,7 @@ const App = () => {
       setTrendingRepos(
         items.map(
           ({id, name, description,html_url: url,stargazers_count: stars,language,}: any) => 
-            ({ id, name, description, url, stars, language, liked: isLikedRepo(id), }),
+            ({ id, name, description, url, stars, language}),
         ),
       );
     } catch (err) {
