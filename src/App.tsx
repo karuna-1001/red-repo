@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Repo, Tab } from "./types";
 import TheHeader from "./components/TheHeader";
-import { reposData } from "./mocks/repos";
 import { gitHubSearchUrl } from "./utils";
 import RepoList from "./components/RepoList";
 
@@ -21,9 +20,8 @@ const App = () => {
       setIsLoading(true);
       setIsError(false);
 
-    //   const response = await fetch(gitHubSearchUrl(languageValue));
-    //   const { items } = await response.json();
-      const items = reposData.items;
+      const response = await fetch(gitHubSearchUrl(languageValue));
+      const { items } = await response.json();
       setTrendingRepos(
         items.map(
           ({id, name, description,html_url: url,stargazers_count: stars,language,}: any) => 
