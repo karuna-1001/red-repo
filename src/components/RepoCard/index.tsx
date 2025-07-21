@@ -1,5 +1,5 @@
 import type RepoCardProps from "./types";
-const RepoCard =({ repo }: RepoCardProps)=>{return (
+const RepoCard =({ repo,toggleLike }: RepoCardProps)=>{return (
     <div
       data-role="repo-card"
       key={repo.id}
@@ -17,6 +17,7 @@ const RepoCard =({ repo }: RepoCardProps)=>{return (
         </div>
 
         <button
+        onClick={() => toggleLike(repo)}
           className='curson-pointer grow-0 basis-1 text-2xl font-bold hover:text-3xl text-gray-300 px-2 text-center'
         >
           ♥

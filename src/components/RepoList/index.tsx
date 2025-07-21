@@ -1,7 +1,7 @@
 import RepoCard from "../RepoCard";
 import type RepoListProps from "./types";
 
-const RepoList=({trendingRepos,activeTab,}:RepoListProps)=>{
+const RepoList=({trendingRepos,activeTab,toggleLike}:RepoListProps)=>{
   return (
     <div data-role="repo-list">
         <div className="mb-6 w-full text-center text-gray-500">
@@ -14,6 +14,7 @@ const RepoList=({trendingRepos,activeTab,}:RepoListProps)=>{
           <RepoCard
             key={repo.id}
             repo={repo}
+            toggleLike={toggleLike}
           />
         ))}
       </div>

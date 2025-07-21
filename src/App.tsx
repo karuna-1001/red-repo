@@ -36,6 +36,16 @@ const App = () => {
       setIsLoading(false);
     }
   };
+  const isLikedRepo = (repoId: number): boolean => {
+    return likedRepos.some((repo) => repo.id === repoId);
+  };
+  const toggleLike = (repo: Repo) => {
+    if (isLikedRepo(repo.id)) {
+      setLikedRepos((prevRepos) => prevRepos.filter((prevRepo) => prevRepo.id !== repo.id));
+    } else {
+      setLikedRepos((prevRepos) => [...prevRepos, repo]);
+    }
+  };
   const filterTrendingRepos = () => {
     setActiveTab("trending");
     getTrendingRepos();
@@ -66,6 +76,7 @@ const App = () => {
       <RepoList
           trendingRepos={currentRepos}
            activeTab={activeTab}
+           toggleLike={toggleLike}
         />
     </div>
   );
