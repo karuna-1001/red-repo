@@ -44,7 +44,7 @@ const App = () => {
       )}
       <div>
         <h2 className="text-2xl">Repo List</h2>
-        {trendingRepos.map((repo)=>(<p>{repo.id} - {repo.name} - {repo.stars} - {repo.language}</p>))}
+        {trendingRepos.map((repo)=>(<p key={repo.id} > {repo.name} - {repo.stars} - {repo.language}</p>))}
       </div>
     </div>
   );
