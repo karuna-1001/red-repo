@@ -1,9 +1,10 @@
 import type RepoCardProps from "./types";
-const RepoCard =({ repo,toggleLike }: RepoCardProps)=>{return (
+const RepoCard = ({ repo, toggleLike }: RepoCardProps) => {
+  return (
     <div
       data-role="repo-card"
       key={repo.id}
-      className='min-h-[100px] rounded-sm border p-2 hover:shadow-lg border-gray-300 bg-gray-50 hover:border-gray-400'
+      className={`min-h-[100px] rounded-sm border p-2 hover:shadow-lg ${repo.liked ? "border-red-200 bg-red-50 shadow-md hover:border-red-500" : "border-gray-300 bg-gray-50 hover:border-gray-400"}`}
     >
       <div className="flex">
         <div className="grow p-2">
@@ -17,8 +18,8 @@ const RepoCard =({ repo,toggleLike }: RepoCardProps)=>{return (
         </div>
 
         <button
-        onClick={() => toggleLike(repo)}
-          className='curson-pointer grow-0 basis-1 text-2xl font-bold hover:text-3xl text-gray-300 px-2 text-center'
+          onClick={() => toggleLike(repo)}
+          className={`curson-pointer grow-0 basis-1 text-2xl font-bold hover:text-3xl ${repo.liked ? "text-red-700" : "text-gray-300"} px-2 text-center`}
         >
           ♥
         </button>
@@ -32,5 +33,6 @@ const RepoCard =({ repo,toggleLike }: RepoCardProps)=>{return (
         </p>
       </div>
     </div>
-  );}
-export default RepoCard
+  );
+};
+export default RepoCard;

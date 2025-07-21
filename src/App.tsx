@@ -26,7 +26,7 @@ const App = () => {
       setTrendingRepos(
         items.map(
           ({id, name, description,html_url: url,stargazers_count: stars,language,}: any) => 
-            ({ id, name, description, url, stars, language, liked: false, }),
+            ({ id, name, description, url, stars, language, liked: isLikedRepo(id), }),
         ),
       );
     } catch (err) {
@@ -36,26 +36,34 @@ const App = () => {
       setIsLoading(false);
     }
   };
+
   const isLikedRepo = (repoId: number): boolean => {
     return likedRepos.some((repo) => repo.id === repoId);
   };
+
   const toggleLike = (repo: Repo) => {
-    if (isLikedRepo(repo.id)) {
-      setLikedRepos((prevRepos) => prevRepos.filter((prevRepo) => prevRepo.id !== repo.id));
+    if (repo.liked) {
+        setLikedRepos((prevRepos) => prevRepos.filter((prevRepo) => prevRepo.id !== repo.id));
     } else {
-      setLikedRepos((prevRepos) => [...prevRepos, repo]);
+        const likeRepo = {...repo,liked:true}
+        setLikedRepos((prevRepos) => [...prevRepos, likeRepo]);
     }
+    
   };
+
   const filterTrendingRepos = () => {
     setActiveTab("trending");
     getTrendingRepos();
   };
+
   useEffect(() => {
     setCurrentRepos(activeTab === "liked" ? likedRepos : trendingRepos);
   }, [activeTab, likedRepos, trendingRepos]);
+
   useEffect(() => {
     getTrendingRepos();
   }, []);
+
   return (
     <div className="shadow-x1-20 mx-auto min-h-screen max-w-5xl p-6 text-center">
       {isLoading && (
