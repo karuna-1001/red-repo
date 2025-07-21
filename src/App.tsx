@@ -10,10 +10,11 @@ const App = () => {
   const [isError, setIsError] = useState<boolean>(false);
 
   const [activeTab, setActiveTab] = useState<Tab>("liked");
+  const [languageValue, setLanguageValue] = useState<string>("");
+
   const [trendingRepos, setTrendingRepos] = useState<Repo[]>([]);
   const [likedRepos, setLikedRepos] = useState<Repo[]>([]);
   const [currentRepos, setCurrentRepos] = useState<Repo[]>([]);
-  const [languageValue, setLanguageValue] = useState<string>("");
 
   const getTrendingRepos = async () => {
     try {
@@ -42,11 +43,10 @@ const App = () => {
   };
 
   const toggleLike = (repo: Repo) => {
-    if (repo.liked) {
+    if (isLikedRepo(repo.id)) {
         setLikedRepos((prevRepos) => prevRepos.filter((prevRepo) => prevRepo.id !== repo.id));
     } else {
-        const likeRepo = {...repo,liked:true}
-        setLikedRepos((prevRepos) => [...prevRepos, likeRepo]);
+        setLikedRepos((prevRepos) => [...prevRepos, repo]);
     }
     
   };
@@ -57,10 +57,20 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (likedRepos.length > 0) {
+      localStorage.setItem("likedRepos", JSON.stringify(likedRepos));
+    }
+  }, [likedRepos]);
+
+  useEffect(() => {
     setCurrentRepos(activeTab === "liked" ? likedRepos : trendingRepos);
   }, [activeTab, likedRepos, trendingRepos]);
 
   useEffect(() => {
+    const storedRepos = localStorage.getItem("likedRepos");
+    storedRepos && storedRepos.length > 0
+      ? setLikedRepos(() => JSON.parse(storedRepos))
+      : [];
     getTrendingRepos();
   }, []);
 
@@ -85,6 +95,7 @@ const App = () => {
           trendingRepos={currentRepos}
            activeTab={activeTab}
            toggleLike={toggleLike}
+           isLikedRepo={isLikedRepo}
         />
     </div>
   );

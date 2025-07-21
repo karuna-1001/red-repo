@@ -4,4 +4,5 @@ export default interface RepoListProps {
   trendingRepos: Repo[];
   activeTab: Tab;
   toggleLike: (repo: Repo) => void;
+  isLikedRepo: (repoId: number) => boolean;
 }
