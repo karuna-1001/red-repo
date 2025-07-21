@@ -2,25 +2,24 @@ import { useEffect, useState } from "react";
 import type { Repo, Tab } from "./types";
 import TheHeader from "./components/TheHeader";
 import { reposData } from "./mocks/repos";
+import { gitHubSearchUrl } from "./utils";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
   const [activeTab, setActiveTab] = useState<Tab>("liked");
-
   const [trendingRepos, setTrendingRepos] = useState<Repo[]>([]);
+  const [languageValue, setLanguageValue] = useState<string>("");
 
   const getTrendingRepos = async () => {
     try {
       setIsLoading(true);
       setIsError(false);
 
-    //   const response = await fetch(
-    //     "https://api.github.com/search/repositories?q=created:2017-01-10&sort=stars&order=desc",
-    //   );
-    // const { items } = await response.json();
-    const items = reposData.items
+      const response = await fetch(gitHubSearchUrl(languageValue));
+      const { items } = await response.json();
+    //   const items = reposData.items;
       setTrendingRepos(
         items.map(
           ({id, name, description,html_url: url,stargazers_count: stars,language,}: any) => 
@@ -47,11 +46,19 @@ const App = () => {
           ⚠ Somthing went wrong. Please try again later.
         </div>
       )}
-      <TheHeader 
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}/>
+      <TheHeader
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        languageValue={languageValue}
+        setLanguageValue={setLanguageValue}
+      />
       <div>
-        {trendingRepos.map((repo)=>(<p key={repo.id} > {repo.name} - {repo.stars} - {repo.language}</p>))}
+        {trendingRepos.map((repo) => (
+          <p key={repo.id}>
+            {" "}
+            {repo.name} - {repo.stars} - {repo.language}
+          </p>
+        ))}
       </div>
     </div>
   );
