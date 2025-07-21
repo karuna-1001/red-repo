@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Repo, Tab } from "./types";
 import TheHeader from "./components/TheHeader";
+import { reposData } from "./mocks/repos";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -15,10 +16,11 @@ const App = () => {
       setIsLoading(true);
       setIsError(false);
 
-      const response = await fetch(
-        "https://api.github.com/search/repositories?q=created:2017-01-10&sort=stars&order=desc",
-      );
-      const { items } = await response.json();
+    //   const response = await fetch(
+    //     "https://api.github.com/search/repositories?q=created:2017-01-10&sort=stars&order=desc",
+    //   );
+    // const { items } = await response.json();
+    const items = reposData.items
       setTrendingRepos(
         items.map(
           ({id, name, description,html_url: url,stargazers_count: stars,language,}: any) => 
